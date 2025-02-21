@@ -35,6 +35,8 @@ Dashboard Visualization
 
 View insights with interactive graphs
 Monitor income vs expenses
+![Screenshot 1](images/screenshot1.png)  
+![Screenshot 2](images/screenshot2.png)
 
 *********************************************************************************************************************************************
 
