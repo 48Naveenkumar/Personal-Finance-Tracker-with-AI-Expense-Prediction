@@ -1,0 +1,141 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20250220212041
+Username: DESKTOP-EV6K60A\HP
+RunAs User: DESKTOP-EV6K60A\HP
+Configuration Name: 
+Machine: DESKTOP-EV6K60A (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\HP\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Process ID: 17152
+PSVersion: 5.1.26100.2161
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.2161
+BuildVersion: 10.0.26100.2161
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is debug_log.txt
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>Write-Host " Starting debug and fix process..."
+ Starting debug and fix process...
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS># Step 1: Check and Fix 'ml_model.py'
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>$mlModelPath = "expenses\ml_model.py"
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>if (!(Test-Path $mlModelPath)) {
+    Write-Host " 'ml_model.py' not found! Creating it..."
+    New-Item -ItemType File -Path $mlModelPath -Force
+}
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS># Ensure 'predict_expense' function exists
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>$functionExists = Select-String -Path $mlModelPath -Pattern "def predict_expense" -Quiet
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>if (-not $functionExists) {
+    Write-Host " Adding 'predict_expense' function to ml_model.py..."
+    @'
+def predict_expense(amount):
+    # Dummy model: Returns 90% of amount
+    return amount * 0.9
+'@ | Out-File -Encoding utf8 -Append $mlModelPath
+}
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS># Step 2: Check and Fix 'views.py'
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>$viewsPath = "expenses\views.py"
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS># Ensure the correct import for 'predict_expense'
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>$importLine = "from .ml_model import predict_expense"
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>if (!(Select-String -Path $viewsPath -Pattern $importLine -Quiet)) {
+    Write-Host " Fixing 'views.py' import..."
+    Add-Content -Path $viewsPath -Value "`n$importLine"
+}
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS># Step 3: Fix 'ExpenseViewSet' Import Issue
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>$viewsetImportLine = "from rest_framework.viewsets import ViewSet"
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>if (!(Select-String -Path $viewsPath -Pattern $viewsetImportLine -Quiet)) {
+    Write-Host " Adding missing ViewSet import..."
+    Add-Content -Path $viewsPath -Value "`n$viewsetImportLine"
+}
+ Adding missing ViewSet import...
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS># Check if 'ExpenseViewSet' class exists
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>$expenseViewSetExists = Select-String -Path $viewsPath -Pattern "class ExpenseViewSet" -Quiet
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>if (-not $expenseViewSetExists) {
+    Write-Host " Adding a dummy 'ExpenseViewSet' class..."
+    @'
+class ExpenseViewSet(ViewSet):
+    def list(self, request):
+        return JsonResponse({"message": "Expense list"})
+'@ | Out-File -Encoding utf8 -Append $viewsPath
+}
+ Adding a dummy 'ExpenseViewSet' class...
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS># Step 4: Delete '__pycache__' to refresh imports
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>Write-Host " Clearing __pycache__..."
+ Clearing __pycache__...
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>Remove-Item -Recurse -Force expenses\__pycache__ -ErrorAction SilentlyContinue
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>Remove-Item -Recurse -Force backend\__pycache__ -ErrorAction SilentlyContinue
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS># Step 5: Restart Virtual Environment
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>Write-Host " Restarting Virtual Environment..."
+ Restarting Virtual Environment...
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>deactivate
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>venv\Scripts\activate
+venv\Scripts\activate : The module 'venv' could not be loaded. For more information, run 'Import-Module venv'.
+At line:1 char:1
++ venv\Scripts\activate
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (venv\Scripts\activate:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CouldNotAutoLoadModule
+venv\Scripts\activate : The module 'venv' could not be loaded. For more information, run 'Import-Module venv'.
+At line:1 char:1
++ venv\Scripts\activate
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (venv\Scripts\activate:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CouldNotAutoLoadModule
+
+]633;D;1]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS># Step 6: Run Server
+]633;D;1]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>Write-Host " Running Django Server..."
+ Running Django Server...
+]633;D;0]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>python manage.py runserver
+
+PS>TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+]633;D;1]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+]633;D]633;A]633;P;Cwd=F:\x5cfinance-tracker\x5cbackendPS F:\finance-tracker\backend> ]633;B
+PS>Stop-Transcript
+**********************
+Windows PowerShell transcript end
+End time: 20250220212154
+**********************
