@@ -74,26 +74,6 @@ Monitor income vs expenses
 
 *********************************************************************************************************************************************
 
-📂 Personal-Finance-Tracker-with-AI-Expense-Prediction
-├── 📂 backend              # Django Backend
-│   ├── 📂 api              # Django REST Framework APIs
-│   ├── 📂 models           # Expense & Budget Models
-│   ├── 📂 ai_model         # Machine Learning Scripts
-│   ├── manage.py           # Django Project Manager
-│   ├── requirements.txt    # Backend Dependencies
-│   ├── db.sqlite3          # Database (if using SQLite)
-├── 📂 frontend             # React Frontend
-│   ├── 📂 src
-│   │   ├── components      # UI Components
-│   │   ├── pages           # Dashboard, Expenses, Budget
-│   │   ├── App.js          # Main React App
-│   │   ├── index.js        # React Entry Point
-│   ├── package.json        # Frontend Dependencies
-├── 📄 README.md            # Project Documentation
-├── 📄 .gitignore           # Ignore Unnecessary Files
-
-*********************************************************************************************************************************************
-
 🚀 Commands for Running the Project
 🔥 Start the Backend
 
